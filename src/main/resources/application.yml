@@ -1,0 +1,13 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: apinetflix
+
+
+logging:
+  file: log/api.log
+  level:
+    #com.netflix.discovery: 'OFF'
+    org.springframework.cloud: 'DEBUG'
