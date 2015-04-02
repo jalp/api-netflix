@@ -5,9 +5,9 @@ import apinetflix.exception.UserException;
 import apinetflix.pojo.Ad;
 
 import org.apache.log4j.Logger;
-import com.netflix.appinfo.InstanceInfo;
-import com.netflix.discovery.DiscoveryClient;
-import org.springframework.beans.factory.annotation.Autowired;
+//import com.netflix.appinfo.InstanceInfo;
+//import com.netflix.discovery.DiscoveryClient;
+//import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,18 +21,18 @@ public class ApiController {
 
     private static final Logger logger = Logger.getLogger(ApiController.class);
 
-    @Autowired
-    private DiscoveryClient discoveryClient;
-
-    private String serviceURL() {
-        InstanceInfo instanceInfo = discoveryClient.getNextServerFromEureka("patata", false);
-        return instanceInfo.getHomePageUrl();
-    }
-
+//    @Autowired
+//    private DiscoveryClient discoveryClient;
+//
+//    private String serviceURL() {
+//        InstanceInfo instanceInfo = discoveryClient.getNextServerFromEureka("patata", false);
+//        return instanceInfo.getHomePageUrl();
+//    }
+//
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public String pong() {
-        serviceURL();
-        logger.info("ing called");
+//        serviceURL();
+        logger.info("Ping called");
         return "pong";
     }
 
@@ -46,7 +46,7 @@ public class ApiController {
         }
 
         logger.debug("getSavedAds with id " + account_id + ", lim: " + lim + ", offset: " + offset);
-        List<Ad> ad_list = new ArrayList<Ad>();
+        List<Ad> ad_list = new ArrayList<>();
         IntStream.range(0, lim).parallel().forEach(
                 n -> {
                     Ad ad = new Ad();

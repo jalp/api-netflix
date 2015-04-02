@@ -1,13 +1,33 @@
 server:
-  port: 8080
+  port: 9200 # Zuul is on port 8080
 
 spring:
-  application:
+  config:
     name: apinetflix
+  profiles:
+    active: development
 
+---
+
+spring:
+  profiles: development
+
+cassandra:
+  contactpoints: 10.0.0.2
+  port: 9042
+  keyspace: demo
+---
+
+spring:
+  profiles: test
+  contactpoints: 10.0.0.2
+  port: 9042
+  keyspace: test
+---
 
 logging:
   file: log/api.log
   level:
-    #com.netflix.discovery: 'OFF'
+    com.netflix.discovery: 'OFF'
     org.springframework.cloud: 'DEBUG'
+    apinetflix.Application: 'DEBUG'

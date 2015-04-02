@@ -1,15 +1,16 @@
 spring:
   application:
     name: apinetflix
-# Once a config server is setup, use this
-#  platform:
-#    config:
-#      uri: http://user:password@localhost:8888
-
+  # Once a config server is setup, use this
+  cloud:
+    config:
+      enabled: true
+      uri: http://user:varada@localhost:8888
 eureka:
+  instance:
+    leaseRenewalIntervalInSeconds: 10
   client:
-    serviceURL:
+    serviceUrl:
       defaultZone: http://localhost:8761/eureka/
-
 encrypt:
   failOnError: false
