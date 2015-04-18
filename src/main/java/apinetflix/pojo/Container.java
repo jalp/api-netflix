@@ -1,6 +1,6 @@
 package apinetflix.pojo;
 
-public class Ad {
+public class Container {
     private String body;
     private Boolean companyAd;
     private int listId;
@@ -40,7 +40,7 @@ public class Ad {
 
     @Override
     public String toString() {
-        return "Ad{" +
+        return "Container{" +
                 "body='" + body + '\'' +
                 ", companyAd=" + companyAd +
                 ", listId=" + listId +

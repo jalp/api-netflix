@@ -8,16 +8,15 @@ spring:
       uri: http://user:varada@localhost:8888
 eureka:
   instance:
+    #Virtual host name by which the clients identifies this service
+    virtualHostName: ${spring.application.name}
     leaseRenewalIntervalInSeconds: 10
-    metadataMap:
-          availability-zone: dc3
   client:
-    registryFetchIntervalSeconds: 5
+    registryFetchIntervalSeconds: 30
     serviceUrl:
       defaultZone: http://localhost:8761/eureka/
-  ribbon:
-      NIWSServerListClassName: com.netflix.niws.loadbalancer.DiscoveryEnabledNIWSServerList
-      DeploymentContextBasedVipAddresses: apinetflix
+#  ribbon:
+#      NIWSServerListClassName: com.netflix.niws.loadbalancer.DiscoveryEnabledNIWSServerList
 
 encrypt:
   failOnError: false

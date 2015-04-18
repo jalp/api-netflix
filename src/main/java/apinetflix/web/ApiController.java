@@ -2,13 +2,14 @@ package apinetflix.web;
 
 import apinetflix.exception.ExceptionResponse;
 import apinetflix.exception.UserException;
-import apinetflix.pojo.Ad;
+import apinetflix.pojo.Container;
 
 import org.apache.log4j.Logger;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.stream.IntStream;
 
@@ -25,24 +26,24 @@ public class ApiController {
     }
 
     @RequestMapping(value = "{account_id}/saved_ads", method = RequestMethod.GET)
-    public List<Ad> getSavedAds(@PathVariable("account_id") int account_id,
+    public List<Container> getSavedAds(@PathVariable("account_id") int account_id,
                                 @RequestParam(value = "lim", required = false, defaultValue = "10") int lim,
                                 @RequestParam(value = "o", required = false, defaultValue = "1") int offset) throws UserException {
-        if (account_id == 0){
+        if (account_id == 0) {
             logger.error("User " + account_id + " does not exists");
             throw new UserException("User " + account_id + " does not exists");
         }
 
         logger.debug("getSavedAds with id " + account_id + ", lim: " + lim + ", offset: " + offset);
-        List<Ad> ad_list = new ArrayList<>();
+        List<Container> ad_list = new ArrayList<>();
         IntStream.range(0, lim).parallel().forEach(
                 n -> {
-                    Ad ad = new Ad();
-                    ad.setCompanyAd(true);
-                    ad.setListId(n);
-                    ad.setBody("LoremIpsum");
-                    ad.setSubject("LoremIpsum subject");
-                    ad_list.add(ad);
+                    Container container = new Container();
+                    container.setCompanyAd(true);
+                    container.setListId(n);
+                    container.setBody("LoremIpsum");
+                    container.setSubject("LoremIpsum subject");
+                    ad_list.add(container);
                 }
         );
         return ad_list;
@@ -52,14 +53,23 @@ public class ApiController {
     public String postSavedAds(@PathVariable("account_id") int account_id,
                                @RequestParam("list_id") String list_id,
                                @RequestHeader("X-NGA-SOURCE") String header,
-                               @RequestBody Ad ad) {
-        logger.info("PostSavedAds for " + account_id + " ad list: " + list_id + " body " + ad.toString());
-        return "Saved " + account_id + " ad list: " + list_id + " body "+ ad.toString() ;
+                               @RequestBody Container container) {
+        logger.info("PostSavedAds for " + account_id + " container list: " + list_id + " body " + container.toString());
+        return "Saved " + account_id + " container list: " + list_id + " body " + container.toString();
+    }
+
+    @RequestMapping(value = "/{accountId}/container", method = RequestMethod.POST)
+    public LinkedHashMap postContainer(@PathVariable("accountId") int accountId,
+                                       @RequestBody Container container) {
+        logger.info("Account id: " + accountId + " with content " + container);
+        LinkedHashMap<String, String> response = new LinkedHashMap<>();
+        response.put("result", "Data saved correctly");
+        return response;
     }
 
     @ExceptionHandler(UserException.class)
     @ResponseStatus(value = HttpStatus.BAD_REQUEST)
-    public ExceptionResponse handleException(UserException uex){
+    public ExceptionResponse handleException(UserException uex) {
         return new ExceptionResponse(uex.getMessage());
     }
 }

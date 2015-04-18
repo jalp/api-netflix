@@ -1,6 +1,6 @@
 package apinetflix;
 
-import apinetflix.pojo.Ad;
+import apinetflix.pojo.Container;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.Before;
 import org.junit.Test;
@@ -39,7 +39,7 @@ public class ApiControllerTest {
 
     private MockMvc mockMvc;
 
-    private Ad ad;
+    private Container container;
     private int account_id;
 
     // For JSON serialization
@@ -51,11 +51,11 @@ public class ApiControllerTest {
 
     @Before
     public void setup() throws Exception {
-        ad = new Ad();
-        ad.setBody("Lorem Ipsum");
-        ad.setListId(1);
-        ad.setSubject("Lorem Ipsum 1");
-        ad.setCompanyAd(false);
+        container = new Container();
+        container.setBody("Lorem Ipsum");
+        container.setListId(1);
+        container.setSubject("Lorem Ipsum 1");
+        container.setCompanyAd(false);
 
         account_id = 1;
 
@@ -115,7 +115,7 @@ public class ApiControllerTest {
                 .header("X-NGA-SOURCE", "90")
                 .param("list_id", "10")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(mapper.writeValueAsBytes(ad)))
+                .content(mapper.writeValueAsBytes(container)))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(textPlainContentType));
@@ -128,7 +128,7 @@ public class ApiControllerTest {
                 .header("X-NGA-SOURCE", "90")
                 .param("list_id", "10").param("list_id", "11")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(mapper.writeValueAsBytes(ad)))
+                .content(mapper.writeValueAsBytes(container)))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(textPlainContentType));
     }
