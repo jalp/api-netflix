@@ -5,9 +5,6 @@ import apinetflix.exception.UserException;
 import apinetflix.pojo.Ad;
 
 import org.apache.log4j.Logger;
-//import com.netflix.appinfo.InstanceInfo;
-//import com.netflix.discovery.DiscoveryClient;
-//import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,17 +18,8 @@ public class ApiController {
 
     private static final Logger logger = Logger.getLogger(ApiController.class);
 
-//    @Autowired
-//    private DiscoveryClient discoveryClient;
-//
-//    private String serviceURL() {
-//        InstanceInfo instanceInfo = discoveryClient.getNextServerFromEureka("patata", false);
-//        return instanceInfo.getHomePageUrl();
-//    }
-//
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public String pong() {
-//        serviceURL();
         logger.info("Ping called");
         return "pong";
     }
